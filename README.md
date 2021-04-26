@@ -1,2 +1,27 @@
-# hlsproxy
-Docker image for HLS Proxy
+```shell
+Docker image for HLS Proxy. 
+
+PREREQUISITES
+ - Docker installed
+
+INSTALLATION
+ - Docker compose example: 
+
+# Hlsproxy
+  hlsproxy:
+    container_name: hlsproxy
+    image: baroka/hlsproxy:latest
+    restart: unless-stopped  
+    network_mode: "service:openvpn" # Encrypt thru vpn
+    #ports:       
+    #  - 8085:8085 # open port in vpn container
+    volumes:
+      - $DOCKERDIR/hlsproxy/data:/opt/hlsp
+      - $DOCKERDIR/hlsproxy/media:/media
+    environment:
+      - TZ=$TZ
+      - PGID=$PGID
+      - PUID=$PUID  
+
+ - $DOCKERDIR points to your local path for hlsproxy config files. Necessary for persist settings. 
+```
