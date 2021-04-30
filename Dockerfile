@@ -16,7 +16,7 @@ RUN mkdir -p /opt/hlsp
 VOLUME [ "/opt/hlsp" ]
 
 # Install HLS Proxy
-RUN wget https://www.hls-proxy.com/downloads/7.5.8/hls-proxy-7.5.8.linux-x64.zip -O /var/tmp/hlsproxy.zip
+RUN wget https://www.hls-proxy.com/downloads/7.6.0/hls-proxy-7.6.0.linux-x64.zip -O /var/tmp/hlsproxy.zip
 
 # Unzip HLS Proxy
 RUN unzip -o /var/tmp/hlsproxy.zip -d /opt/hlsp/
