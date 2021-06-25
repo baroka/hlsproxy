@@ -27,10 +27,10 @@ ADD crontab /etc/cron.d/cron
 RUN chmod 0644 /etc/cron.d/cron
 
 # Install HLS Proxy
-RUN curl -O https://www.hls-proxy.com/downloads/7.6.2/hls-proxy-7.6.2.linux-x64.zip && \
-    unzip hls-proxy-7.6.2.linux-x64.zip
+RUN curl -O https://www.hls-proxy.com/downloads/7.6.4/hls-proxy-7.6.4.linux-x64.zip && \
+    unzip hls-proxy-7.6.4.linux-x64.zip
 
-RUN rm hls-proxy-7.6.2.linux-x64.zip
+RUN rm hls-proxy-7.6.4.linux-x64.zip
 
 # Give execution rights
 RUN chmod a+x hls-proxy
