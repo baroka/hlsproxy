@@ -12,7 +12,7 @@ COPY entrypoint.sh .
 RUN chmod a+x entrypoint.sh
 
 # Install packages
-RUN apt-get update && apt-get -y install unzip curl cron
+RUN apt-get update && apt-get -y install unzip curl cron iproute2
 
 # Timezone
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
@@ -27,10 +27,10 @@ ADD crontab /etc/cron.d/cron
 RUN chmod 0644 /etc/cron.d/cron
 
 # Install HLS Proxy
-RUN curl -O https://www.hls-proxy.com/downloads/8.0.0/hls-proxy-8.0.0.linux-x64.zip && \
-    unzip hls-proxy-8.0.0.linux-x64.zip
+RUN curl -O https://www.hls-proxy.com/downloads/8.0.1/hls-proxy-8.0.1.linux-x64.zip && \
+    unzip hls-proxy-8.0.1.linux-x64.zip
 
-RUN rm hls-proxy-8.0.0.linux-x64.zip
+RUN rm hls-proxy-8.0.1.linux-x64.zip
 
 # Give execution rights
 RUN chmod a+x hls-proxy
