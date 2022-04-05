@@ -12,7 +12,7 @@ COPY entrypoint.sh .
 RUN chmod a+x entrypoint.sh
 
 # Install packages
-RUN apt-get update && apt-get -y install unzip curl cron iproute2
+RUN apt-get update && apt-get -y install unzip curl cron iproute2 jq
 
 # Timezone
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
@@ -27,13 +27,22 @@ ADD crontab /etc/cron.d/cron
 RUN chmod 0644 /etc/cron.d/cron
 
 # Install HLS Proxy
-RUN curl -O https://www.hls-proxy.com/downloads/8.1.5/hls-proxy-8.1.5.linux-x64.zip && \
-    unzip hls-proxy-8.1.5.linux-x64.zip
+RUN curl -O https://www.hls-proxy.com/downloads/8.1.6/hls-proxy-8.1.6.linux-x64.zip && \
+    unzip hls-proxy-8.1.6.linux-x64.zip
 
-RUN rm hls-proxy-8.1.5.linux-x64.zip
+RUN rm hls-proxy-8.1.6.linux-x64.zip
 
 # Give execution rights
 RUN chmod a+x hls-proxy
+
+# Set log file
+RUN touch /var/log/hls-proxy.log
+
+# Health check
+COPY health.sh .
+RUN chmod a+x health.sh
+HEALTHCHECK --interval=60s --timeout=5s --retries=3 --start-period=90s \  
+    CMD bash health.sh
 
 # Run the command on container startup
 ENTRYPOINT ["/work/entrypoint.sh"]

@@ -1,0 +1,14 @@
+#!/bin/bash
+LOG_FILE=/var/log/hls-proxy.log
+ERROR="ERROR Request failed, no retry left: Exception: connect ENETUNREACH"
+
+if cat $LOG_FILE | grep -q "$ERROR"; then
+    echo "Unhealthy container. exit 1"   
+    > $LOG_FILE
+    exit 1
+else
+	exit 0
+fi
+
+#Example error line:
+#ERROR Request failed, no retry left: Exception: connect ENETUNREACH 45.150.197.62:25461 - Local (0.0.0.0:0) http://45.150.197.62:25461/live/KjBJ8q0CVe/0aVuxftuB1/1085.m3u8?token=TURYAhZYEAwSV1QFXlQEWgcDVFZUAQFVUgMFV1ddBVZQBFQAAQkHVwlGTxBLF0AGVA9uD1IbCQcBC1EZREwVAEQ5WQdHChAHBVFVAw9TEE8XFlgLUxsJBh0RFFwCG1xHD1YFVEccEFNIEAZAVgJePFEHRw9VXBEMX0YIWUobCQtpAlUOBF5WFApGUxAUQVsQRUALCENVXxoTUQ1BFFgSABRcElZXBwIUHEYAXU0NRhFMQAtEc2oRGhNWHEEDVxUMWQgSWUddAUMIRk8QURBtEVARRRRTWF5TQxFeF1YbSkdbB0g8Bl9cWFUHF1tXDUFBD0AARBobXllfWhBaFGYWDFJECkFQAwUFBEYe
