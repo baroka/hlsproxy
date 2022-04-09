@@ -8,7 +8,7 @@ chmod 0644 /etc/cron.d/cron
 
 # Apply cron job
 crontab /etc/cron.d/cron
-cron
+crond
 
 echo "------ ALLOW HLS PROXY ON EVERY INTERFACE -------"
 /work/hls-proxy -address 0.0.0.0 -port 8085 -save -quit

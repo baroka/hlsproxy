@@ -1,7 +1,7 @@
 # build:
 #  docker build -t baroka/hlsproxy .
 
-FROM ubuntu:latest
+FROM alpine:latest
 
 EXPOSE 8085
 
@@ -12,13 +12,12 @@ COPY entrypoint.sh .
 RUN chmod a+x entrypoint.sh
 
 # Install packages
-RUN apt-get update && apt-get -y install unzip curl cron iproute2 jq
+RUN apk update && apk add --no-cache unzip curl iproute2 jq ffmpeg
 
 # Timezone
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
-RUN echo "Europe/Madrid" > /etc/timezone
-RUN rm -f /etc/localtime
-RUN dpkg-reconfigure -f noninteractive tzdata
+RUN apk update && apk add tzdata
+ENV TZ=Europe/Madrid
+RUN cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 
 # Add crontab file to the cron directory
 ADD crontab /etc/cron.d/cron
@@ -42,7 +41,7 @@ RUN touch /var/log/hls-proxy.log
 COPY health.sh .
 RUN chmod a+x health.sh
 HEALTHCHECK --interval=60s --timeout=5s --retries=3 --start-period=90s \  
-    CMD bash health.sh
+    CMD sh health.sh
 
 # Run the command on container startup
 ENTRYPOINT ["/work/entrypoint.sh"]
