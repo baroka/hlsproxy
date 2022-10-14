@@ -16,7 +16,8 @@ RUN apk update && apk add --no-cache unzip curl iproute2 jq ffmpeg
 
 # Timezone
 RUN apk update && apk add tzdata
-ENV TZ=Europe/Madrid
+ARG TZ "Europe/Madrid"
+ENV TZ=$TZ
 RUN cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 
 # Add crontab file to the cron directory
