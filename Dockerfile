@@ -12,7 +12,8 @@ COPY entrypoint.sh .
 RUN chmod a+x entrypoint.sh
 
 # Install packages
-RUN apk update && apk add --no-cache unzip curl iproute2 jq ffmpeg
+RUN apk update && apk add --no-cache unzip curl iproute2 jq ffmpeg && \
+    rm -rf /tmp/*
 
 # Timezone
 RUN apk update && apk add tzdata
